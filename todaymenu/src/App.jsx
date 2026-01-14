@@ -61,12 +61,12 @@ function MenuBlock({ textLines, variant = "warm", likeKey, likes, setLikes, onTo
                 ? "from-sky-400 to-indigo-400"
                 : "from-amber-400 to-yellow-400";
 
-    const state = likes[likeKey] ?? { liked: false, count: 59 };
+    const state = likes[likeKey] ?? { liked: false, count: 0 };
 
     const onToggle = () => {
         // 낙관적 업데이트
         setLikes((prev) => {
-            const cur = prev[likeKey] ?? { liked: false, count: 59 };
+            const cur = prev[likeKey] ?? { liked: false, count: 0 };
             const nextLiked = !cur.liked;
             const nextCount = Math.max(0, cur.count + (nextLiked ? 1 : -1));
             return { ...prev, [likeKey]: { liked: nextLiked, count: nextCount } };
@@ -408,7 +408,7 @@ export default function App() {
                     const updated = { ...prev };
                     favorites.forEach((menuId) => {
                         if (!updated[menuId]) {
-                            updated[menuId] = { liked: true, count: 59 };
+                            updated[menuId] = { liked: true, count: 0 };
                         } else {
                             updated[menuId] = { ...updated[menuId], liked: true };
                         }
@@ -475,7 +475,7 @@ export default function App() {
             if (json.liked !== expectedLiked) {
                 console.warn("서버 응답과 로컬 상태 불일치, 롤백합니다.");
                 setLikes((prev) => {
-                    const cur = prev[menuId] ?? { liked: false, count: 59 };
+                    const cur = prev[menuId] ?? { liked: false, count: 0 };
                     return {
                         ...prev,
                         [menuId]: {
@@ -490,7 +490,7 @@ export default function App() {
 
             // 실패 시 롤백
             setLikes((prev) => {
-                const cur = prev[menuId] ?? { liked: false, count: 59 };
+                const cur = prev[menuId] ?? { liked: false, count: 0 };
                 const rolledBack = !expectedLiked;
                 const rolledBackCount = Math.max(0, cur.count + (rolledBack ? 1 : -1));
                 return {
