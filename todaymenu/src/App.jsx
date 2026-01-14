@@ -382,7 +382,7 @@ export default function App() {
                 setDataError("");
 
                 // 캐시 무시가 필요하면 ?fresh=1 붙여서 확인 가능
-                const res = await fetch("/api/menu/today", { cache: "no-store" });
+                const res = await fetch(`${API_BASE}/api/menu/today`, { cache: "no-store" });
                 if (!res.ok) throw new Error(`오늘 메뉴 로드 실패 (HTTP ${res.status})`);
 
                 const json = await res.json();
