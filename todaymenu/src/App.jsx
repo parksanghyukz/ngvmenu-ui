@@ -360,10 +360,11 @@ export default function App() {
     //     return "http://localhost:8787";
     // }, []);
     const API_BASE =
-        import.meta.env.VITE_API_BASE_URL ??
-        (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        window.location.hostname === "localhost" ||
+            window.location.hostname === "127.0.0.1"
             ? "http://localhost:8787"
-            : "https://menu-worker.ngvmenu.workers.dev");
+            : "https://menu-worker.ngvmenu.workers.dev";
+
 
     // ✅ 익명 사용자 ID 초기화
     useEffect(() => {
