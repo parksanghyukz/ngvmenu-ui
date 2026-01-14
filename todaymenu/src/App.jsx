@@ -350,15 +350,20 @@ export default function App() {
 
     // ⚙️ API 엔드포인트 설정 (개발/배포 환경 자동 감지)
     // 📝 배포 시 아래 URL을 실제 Workers URL로 변경하세요!
-    const API_BASE = useMemo(() => {
-        // 배포 환경에서는 실제 Workers URL 사용
-        if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-            // ⬇️ 배포 시 이 부분을 실제 Workers URL로 수정
-            return "https://menu-worker.ngvmenu.workers.dev";
-        }
-        // 로컬 개발 시 Workers dev server (기본값)
-        return "http://localhost:8787";
-    }, []);
+    // const API_BASE = useMemo(() => {
+    //     // 배포 환경에서는 실제 Workers URL 사용
+    //     if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+    //         // ⬇️ 배포 시 이 부분을 실제 Workers URL로 수정
+    //         return "https://menu-worker.ngvmenu.workers.dev";
+    //     }
+    //     // 로컬 개발 시 Workers dev server (기본값)
+    //     return "http://localhost:8787";
+    // }, []);
+    const API_BASE =
+        import.meta.env.VITE_API_BASE_URL ??
+        (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? "http://localhost:8787"
+            : "https://menu-worker.ngvmenu.workers.dev");
 
     // ✅ 익명 사용자 ID 초기화
     useEffect(() => {
